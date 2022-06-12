@@ -1,4 +1,6 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:audioplayers/audioplayers.dart';
 
 void main() {
   runApp(const MyApp());
@@ -32,11 +34,19 @@ class _MyHomePageState extends State<MyHomePage> {
   String imageLink = 'assets/off_button.png';
   int status = 0; //0 = off, 1 = on, 2 = on and alert
 
-  void _onButtonPressed(String value){
+  void _onButtonPressed(String value) {
     setState(() {
       imageLink = value;
     });
   }
+
+  void _onAlert() async {
+    final player = AudioCache();
+    player.play('kid_air_raid.mp3');
+    _onButtonPressed('assets/alert_button.png');
+    status = 2;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -55,10 +65,22 @@ class _MyHomePageState extends State<MyHomePage> {
                   _onButtonPressed('assets/on_button.png');
                   status = 1;
                 }
-                else{
+                else if(status == 1){
                   _onButtonPressed('assets/off_button.png');
                   status = 0;
                 }
+              },
+            ),
+            FloatingActionButton(
+              onPressed: () {
+                if(status == 1){
+                  _onAlert();
+                  Future.delayed(const Duration(seconds: 13), (){
+                    _onButtonPressed('assets/on_button.png');
+                    status = 1;
+                  });
+                }
+                else null;
               },
             ),
           ],
