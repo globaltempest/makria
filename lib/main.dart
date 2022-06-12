@@ -33,6 +33,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   String imageLink = 'assets/off_button.png';
   int status = 0; //0 = off, 1 = on, 2 = on and alert
+  final player = AudioCache();
 
   void _onButtonPressed(String value) {
     setState(() {
@@ -41,7 +42,6 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void _onAlert() async {
-    final player = AudioCache();
     player.play('kid_air_raid.mp3');
     _onButtonPressed('assets/alert_button.png');
     status = 2;
@@ -68,6 +68,11 @@ class _MyHomePageState extends State<MyHomePage> {
                 else if(status == 1){
                   _onButtonPressed('assets/off_button.png');
                   status = 0;
+                }
+                else{
+                  _onButtonPressed('assets/on_button.png');
+                  status = 1;
+                  player.clearAll();
                 }
               },
             ),
