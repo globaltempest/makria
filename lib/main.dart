@@ -31,6 +31,7 @@ class FirstPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      /*
       appBar: AppBar(
         title: Text(
           title,
@@ -43,6 +44,7 @@ class FirstPage extends StatelessWidget {
         ),
         centerTitle: true,
       ),
+      */
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
@@ -78,6 +80,7 @@ class SecondPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      /*
       appBar: AppBar(
         title: Text(
           title,
@@ -90,6 +93,7 @@ class SecondPage extends StatelessWidget {
         ),
         centerTitle: true,
       ),
+      */
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
@@ -201,7 +205,9 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+
   String imageLink = 'assets/off_button.png';
+  String buttonText = 'Makria is currently disabled. Click on the VPN button to turn it on';
   int status = 0; //0 = off, 1 = on, 2 = on and alert
 
   void _onButtonPressed(String value) {
@@ -214,32 +220,48 @@ class _MyHomePageState extends State<MyHomePage> {
     final player = AudioCache();
     player.load('kid_air_raid.mp3');
     _onButtonPressed('assets/alert_button.png');
+    buttonText = 'Your name has just been mentioned! A telegram has been sent with more details.';
     status = 2;
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      /*
       appBar: AppBar(
         title: Text(widget.title),
       ),
+      */
       body: Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
+            Center(
+              child: Text(
+                '$buttonText',
+                style: TextStyle(
+                  fontSize: 20.0,
+                  letterSpacing: 1.0,
+                  color: Colors.black,
+                ),
+              ),
+            ),
             IconButton(
               icon: Image.asset(imageLink),
               iconSize: 500,
               onPressed: () {
                 if (status == 0) {
                   _onButtonPressed('assets/on_button.png');
+                  buttonText = 'Makria is currently disabled. Click on the VPN button to turn it on';
                   status = 1;
                 } else if (status == 1) {
                   _onButtonPressed('assets/off_button.png');
+                  buttonText = 'Makria is currently enabled and will alert you if your name is detected.';
                   status = 0;
                 }
               },
             ),
+
             FloatingActionButton(
               onPressed: () {
                 if (status == 1) {
